@@ -9,12 +9,14 @@ public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI timeText;
     public GameObject titleScreen;
     public Button restartButton; 
 
     public List<GameObject> targetPrefabs;
 
     private int score;
+    private float time = 60;
     private float spawnRate = 1.5f;
     public bool isGameActive;
 
@@ -71,6 +73,14 @@ public class GameManagerX : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "score: " + score;
+    }
+
+    private void Update()
+    {
+        if (!isGameActive) return;
+        time -= Time.deltaTime;
+        timeText.text = "time: " + Mathf.Round(time);
+        if (time < 0) GameOver();
     }
 
     // Stop game, bring up game over text and restart button
